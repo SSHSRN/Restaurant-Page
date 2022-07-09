@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>SSHSRN's Fictional Restaurant</title>
+</head>
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">SSHSRN's Restaurant</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact_us">Contact</a>
+              </li>
+            </ul>
+            <button class="btn btn-outline-danger" style="margin-left: 80%;" id="logoutButton">Logout</button>
+          </div>
+        </div>
+      </nav>
+
+    <center><div style="margin-top: 50px; width: 80%; border: 2px solid black; border-radius: 20px;">
+        <h3>Have your favourite dinner at our restaurant!</h3>
+        <img style="border-radius: 50px;" class="restaurant_image" src="images/restaurant.png" alt="restaurant_image" >
+        <h3>Come with your near and dear ones and have a great time here!</h3>
+    </div></center>
+
+    <div class="pt-5" id="contact_us">  
+        <div class="container">  
+            <div class="row">  
+                <div class="col-md-5 mx-auto">  
+                    <div style="border: 1px dashed black; padding: 20px;">  
+                        <h2>Contact us!</h2>
+                        <form action="mailto: sshsrn@gmail.com" method="post" enctype="text/plain">
+                            <div class="required">  
+                                <label class="d-flex flex-row align-items-center" for="name"> Enter your Name </label>  
+                                <input type="text" class="form-control text-lowercase" id="s-email" required="" name="name">  
+                            </div>  
+                            <div class="required">  
+                                <label class="d-flex flex-row align-items-center" for="email"> Enter your Email </label>  
+                                <input type="text" class="form-control text-lowercase" id="s-email" required="" name="email">  
+                            </div>                      
+                            <div class="required">  
+                                <label class="d-flex flex-row align-items-center" for="password"> Enter your message </label>  
+                                <textarea name="Msg" id="" cols="50" rows="10"></textarea><br>  
+                            </div>
+                            <div class="pt-1">  
+                                <button class="btn btn-primary btn-block" id="submit" type="submit"> Submit </button>  
+                            </div>
+                        </form>
+                    </div>  
+                </div>  
+            </div>  
+        </div>  
+    </div>
+    <!-- Firebase config -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-analytics.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyCo261PQySDTp9IlLvor8PzXM4Ru2Cr7BY",
+          authDomain: "fictional-restaurant-2286e.firebaseapp.com",
+          projectId: "fictional-restaurant-2286e",
+          storageBucket: "fictional-restaurant-2286e.appspot.com",
+          messagingSenderId: "281990565366",
+          appId: "1:281990565366:web:c29db47b9e34e1b0bbcbd7",
+          measurementId: "G-KF6VSVDEQE"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+        console.log("Firebase initialised");
+
+        const user = auth.currentUser;
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                const uid = user.uid;
+                // ...
+            } else {
+                // User is signed out
+                // ...
+                window.location.replace("error.html");
+            }
+        });
+
+        logoutButton.addEventListener('click', (e) => {
+            signOut(auth)
+                .then(() => {
+                    // Sign-out successful.
+                    // alert("User signed out!");
+                    window.location.replace("index.html");
+                })
+                .catch((error) => {
+                    // An error happened.
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
+        });
+
+      </script>
+</body>
+</html>
