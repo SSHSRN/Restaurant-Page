@@ -27,7 +27,11 @@
     <h1>Well, what else did you expect to happen?😂</h1></center>
     <script>
         document.addEventListener('click', () => {
-            window.location.replace("index.html");
+            aud = new Audio("assets/sounds/spidey.mp3");
+            aud.play()
+            aud.onended = function() {
+                window.location.replace("index.html");
+            }
         })
     </script>
 </body>
